@@ -11,7 +11,11 @@ router.get("/", function (req, res) {
     if (error) {
       throw error;
     } else {
-      res.status(200).json(result.rows);
+      res.json({
+        status: 200,
+        message: "success get data",
+        data: result.rows,
+      });
     }
   });
 });
@@ -23,46 +27,116 @@ router.get("/:id", function (req, res) {
     if (error) {
       throw error;
     } else {
-      res.status(200).json(result.rows);
+      res.json({
+        status: 200,
+        message: "success get data by id",
+        data: result.rows,
+      });
     }
   });
 });
 
 // route post movies
 router.post("/", function (req, res) {
-  db.query(`INSERT INTO movies ("id", "title", "genres", "year") VALUES ($1, $2, $3, $4)`,
-    [req.body.id, req.body.title, req.body.genres, req.body.year], (error, results) => {
+  const queryInsert = `INSERT INTO movies ("id", "title", "genres", "year") VALUES ($1, $2, $3, $4)`;
+  db.query(
+    queryInsert,
+    [req.body.id, req.body.title, req.body.genres, req.body.year],
+    (error, results) => {
       if (error) {
         throw error;
       }
-      res.status(201).json({
-        status: 'success',
+      res.json({
+        status: 200,
+        message: "success insert data movies",
       });
-    });
+    }
+  );
 });
 
 // route put movies
 router.put("/:id", function (req, res) {
-  db.query(`UPDATE movies SET title = '${req.body.title}', genres = '${req.body.genres}', year = ${req.body.year} WHERE id = ${req.params.id}`, (error, results) => {
-      if (error) {
-        throw error;
-      }
-      res.status(201).json({
-        status: 'success',
-      });
+  const queryUpdate = `UPDATE movies SET title = '${req.body.title}', genres = '${req.body.genres}', year = ${req.body.year} WHERE id = ${req.params.id}`;
+  db.query(queryUpdate, (error, results) => {
+    if (error) {
+      throw error;
+    }
+    res.json({
+      status: 200,
+      message: "success updated data movies",
     });
+  });
 });
 
 // route deleted movies
 router.delete("/:id", function (req, res) {
-  db.query(`DELETE FROM movies WHERE id = ${req.params.id}`, (error, results) => {
-      if (error) {
-        throw error;
-      }
-      res.status(201).json({
-        status: 'success',
-      });
+  const queryDeleted = `DELETE FROM movies WHERE id = ${req.params.id}`;
+  db.query(queryDeleted, (error, results) => {
+    if (error) {
+      throw error;
+    }
+    res.json({
+      status: 200,
+      message: "success deleted data movies",
     });
+  });
 });
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    movies:
+ *      type: object
+ *      required:
+ *        - id
+ *        - title
+ *        - genres
+ *        - year
+ *      properties:
+ *        id:
+ *          type: integer
+ *          description: The auto generated id of the movies
+ *        title:
+ *          type: string
+ *          description: The text title
+ *        genres:
+ *          type: string
+ *          description: The text genres
+ *        year:
+ *          type: string
+ *          description: The text year
+ *      example:
+ *        id: 101
+ *        title: Avatars
+ *        genres: Action
+ *        year: 2024
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Movies
+ *  description: The Movies managing API
+ * /api/movies:
+ *    post:
+ *      summary: Create new movies
+ *      tags: [Movies]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *    responses:
+ *      200:
+ *        description: The created movies
+ *        contents:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *      500:
+ *        description: Some server error
+ */
 
 module.exports = router;
