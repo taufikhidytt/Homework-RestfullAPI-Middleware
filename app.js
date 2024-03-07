@@ -4,6 +4,7 @@ const port = 3000;
 const db = require("./config/db");
 const routerMovie = require("./routes/routeMovies");
 const routerUsers = require("./routes/routeUsers");
+const routerAuth = require("./routes/routeAuth");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const swaggerJsdoc = require("swagger-jsdoc");
@@ -20,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/movies", routerMovie);
 app.use("/api/users", routerUsers);
+app.use("/api/auth", routerAuth);
 
 db.connect((err) => {
   return err ? console.log(err) : console.log(`database connected`);

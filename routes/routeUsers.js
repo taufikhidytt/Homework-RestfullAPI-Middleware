@@ -51,11 +51,12 @@ router.post("/", function (req, res) {
     (error, results) => {
       if (error) {
         throw error;
+      } else{
+        res.json({
+          status: 200,
+          message: "success insert data users",
+        });
       }
-      res.json({
-        status: 200,
-        message: "success insert data users",
-      });
     }
   );
 });
@@ -66,11 +67,12 @@ router.put("/:id", function (req, res) {
   db.query(queryUpdate, (error, results) => {
     if (error) {
       throw error;
+    } else{
+      res.json({
+        status: 200,
+        message: "success updated data users",
+      });
     }
-    res.json({
-      status: 200,
-      message: "success updated data users",
-    });
   });
 });
 
@@ -80,11 +82,12 @@ router.delete("/:id", function (req, res) {
   db.query(queryDeleted, (error, results) => {
     if (error) {
       throw error;
+    } else {
+      res.json({
+        status: 200,
+        message: "success deleted data users",
+      });
     }
-    res.json({
-      status: 200,
-      message: "success deleted data users",
-    });
   });
 });
 
