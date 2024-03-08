@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
+const bcrypt = require("bcrypt");
 
 // route get data dan paginate limit endpoint users
 router.get("/", function (req, res) {
@@ -26,6 +27,12 @@ router.get("/:id", function (req, res) {
   db.query(getDataById, function (error, result) {
     if (error) {
       throw error;
+    } else if (result.rowCount === 0) {
+      res.json({
+        status: 404,
+        message: "data not found",
+        data: result.rows,
+      });
     } else {
       res.json({
         status: 200,
@@ -38,16 +45,12 @@ router.get("/:id", function (req, res) {
 
 // route post users
 router.post("/", function (req, res) {
+  let salt = bcrypt.genSaltSync(10);
+  let hash = bcrypt.hashSync(req.body.password, salt);
   const queryInsert = `INSERT INTO users ("id", "email", "gender", "password", "role") VALUES ($1, $2, $3, $4, $5)`;
   db.query(
     queryInsert,
-    [
-      req.body.id,
-      req.body.email,
-      req.body.gender,
-      req.body.password,
-      req.body.role,
-    ],
+    [req.body.id, req.body.email, req.body.gender, hash, req.body.role],
     (error, results) => {
       if (error) {
         throw error;
@@ -63,7 +66,9 @@ router.post("/", function (req, res) {
 
 // route put users
 router.put("/:id", function (req, res) {
-  const queryUpdate = `UPDATE users SET email = '${req.body.email}', gender = '${req.body.gender}', password = '${req.body.password}', role = '${req.body.role}' WHERE id = ${req.params.id}`;
+  let salt = bcrypt.genSaltSync(10);
+  let hash = bcrypt.hashSync(req.body.password, salt);
+  const queryUpdate = `UPDATE users SET email = '${req.body.email}', gender = '${req.body.gender}', password = '${hash}', role = '${req.body.role}' WHERE id = ${req.params.id}`;
   db.query(queryUpdate, (error, results) => {
     if (error) {
       throw error;

@@ -26,6 +26,12 @@ router.get("/:id", function (req, res) {
   db.query(getDataById, function (error, result) {
     if (error) {
       throw error;
+    } else if (result.rowCount === 0) {
+      res.json({
+        status: 404,
+        message: "data not found",
+        data: result.rows,
+      });
     } else {
       res.json({
         status: 200,
@@ -45,11 +51,12 @@ router.post("/", function (req, res) {
     (error, results) => {
       if (error) {
         throw error;
+      } else {
+        res.json({
+          status: 200,
+          message: "success insert data movies",
+        });
       }
-      res.json({
-        status: 200,
-        message: "success insert data movies",
-      });
     }
   );
 });
@@ -60,11 +67,12 @@ router.put("/:id", function (req, res) {
   db.query(queryUpdate, (error, results) => {
     if (error) {
       throw error;
+    } else {
+      res.json({
+        status: 200,
+        message: "success updated data movies",
+      });
     }
-    res.json({
-      status: 200,
-      message: "success updated data movies",
-    });
   });
 });
 
@@ -74,11 +82,12 @@ router.delete("/:id", function (req, res) {
   db.query(queryDeleted, (error, results) => {
     if (error) {
       throw error;
+    } else {
+      res.json({
+        status: 200,
+        message: "success deleted data movies",
+      });
     }
-    res.json({
-      status: 200,
-      message: "success deleted data movies",
-    });
   });
 });
 
