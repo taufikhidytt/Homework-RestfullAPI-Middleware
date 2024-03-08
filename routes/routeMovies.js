@@ -86,7 +86,7 @@ router.delete("/:id", function (req, res) {
  * @swagger
  * components:
  *  schemas:
- *    movies:
+ *    Movies:
  *      type: object
  *      required:
  *        - id
@@ -119,6 +119,58 @@ router.delete("/:id", function (req, res) {
  *  name: Movies
  *  description: The Movies managing API
  * /api/movies:
+ *    get:
+ *      summary: Get all data movies
+ *      tags: [Movies]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *    responses:
+ *      200:
+ *        description: The get movies
+ *        contents:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *      500:
+ *        description: Some server error
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Movies
+ *  description: The Movies managing API
+ * /api/movies/{id}:
+ *    get:
+ *      summary: Get data movies by id
+ *      tags: [Movies]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *    responses:
+ *      200:
+ *        description: The get movies
+ *        contents:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *      500:
+ *        description: Some server error
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Movies
+ *  description: The Movies managing API
+ * /api/movies:
  *    post:
  *      summary: Create new movies
  *      tags: [Movies]
@@ -131,6 +183,58 @@ router.delete("/:id", function (req, res) {
  *    responses:
  *      200:
  *        description: The created movies
+ *        contents:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *      500:
+ *        description: Some server error
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Movies
+ *  description: The Movies managing API
+ * /api/movies/{id}:
+ *    put:
+ *      summary: Update movies by id
+ *      tags: [Movies]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *    responses:
+ *      200:
+ *        description: The update movies
+ *        contents:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *      500:
+ *        description: Some server error
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Movies
+ *  description: The Movies managing API
+ * /api/movies/{id}:
+ *    delete:
+ *      summary: Delete movies by id
+ *      tags: [Movies]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movies'
+ *    responses:
+ *      200:
+ *        description: The deleted movies
  *        contents:
  *          application/json:
  *            schema:

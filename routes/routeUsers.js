@@ -51,7 +51,7 @@ router.post("/", function (req, res) {
     (error, results) => {
       if (error) {
         throw error;
-      } else{
+      } else {
         res.json({
           status: 200,
           message: "success insert data users",
@@ -67,7 +67,7 @@ router.put("/:id", function (req, res) {
   db.query(queryUpdate, (error, results) => {
     if (error) {
       throw error;
-    } else{
+    } else {
       res.json({
         status: 200,
         message: "success updated data users",
@@ -95,7 +95,7 @@ router.delete("/:id", function (req, res) {
  * @swagger
  * components:
  *  schemas:
- *    users:
+ *    Users:
  *      type: object
  *      required:
  *        - id
@@ -125,6 +125,136 @@ router.delete("/:id", function (req, res) {
  *        gender: Male
  *        password: password
  *        role: avatar
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Users
+ *  description: The Users managing API
+ * /api/users:
+ *    get:
+ *      summary: Get all data users
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
+ *    responses:
+ *      200:
+ *        description: The get users
+ *        contents:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
+ *      500:
+ *        description: Some server error
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Users
+ *  description: The Users managing API
+ * /api/users/{id}:
+ *    get:
+ *      summary: Get data users by id
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
+ *    responses:
+ *      200:
+ *        description: The get users
+ *        contents:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
+ *      500:
+ *        description: Some server error
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Users
+ *  description: The Users managing API
+ * /api/users:
+ *    post:
+ *      summary: Create new users
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
+ *    responses:
+ *      200:
+ *        description: The created users
+ *        contents:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
+ *      500:
+ *        description: Some server error
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Users
+ *  description: The Users managing API
+ * /api/users/{id}:
+ *    put:
+ *      summary: Update users by id
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
+ *    responses:
+ *      200:
+ *        description: The created users
+ *        contents:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
+ *      500:
+ *        description: Some server error
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Users
+ *  description: The Users managing API
+ * /api/users/{id}:
+ *    delete:
+ *      summary: Delete users by id
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
+ *    responses:
+ *      200:
+ *        description: The created users
+ *        contents:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
+ *      500:
+ *        description: Some server error
  */
 
 module.exports = router;
